@@ -17,18 +17,24 @@ export default new Router({
             path:'/',
             name:'home',
             component: () => import ('../views/home'),
-            
-        },
-        {
-            path:'/user',
-            name:'usuario',
-            component: () => import ('../views/user'),
             beforeEnter (_, __, next) { // Impede usuários não assinados
               if (isSignedIn()==false) {       // de acessar a página Home.
                 next();
                 return;
               }
               next('/user')
+            }
+        },
+        {
+            path:'/user',
+            name:'usuario',
+            component: () => import ('../views/user'),
+            beforeEnter (_, __, next) { // Impede usuários não assinados
+              if (isSignedIn()) {       // de acessar a página Home.
+                next();
+                return;
+              }
+              next('/')
             }
         }
     ]

@@ -28,22 +28,22 @@
 </div>
 <input class="btn btn-primary col-12" type="submit" value="Logar">
 </form>
-{{user.password}}
-<form id="cadastro">
+
+<form id="cadastro" @submit.prevent="cadastra">
 <div class="text-center">Cadastro</div>
 <div class="input-group formLogin">
   <span class="input-group-addon addon-lg"><img alt="Pw2 logo" src="@/assets/arroba.png" class="img-responsive"></span>
-  <input type="text" class="form-input input-lg" placeholder="Nome de usuário" >
+  <input type="text" class="form-input input-lg" placeholder="Nome de usuário" v-model="user.name">
 </div>
 
 <div class="input-group formLogin">
   <span class="input-group-addon addon-lg"><i class="icon icon-mail"></i></span>
-  <input type="email" class="form-input input-lg" placeholder="Email"/>
+  <input type="email" class="form-input input-lg" placeholder="Email" v-model="user.email"/>
 </div>
 
 <div class="input-group formLogin">
   <span class="input-group-addon addon-lg"><img alt="Pw2 logo" src="@/assets/padlock.png" class="img-responsive"></span>
-  <input type="password" class="form-input input-lg" placeholder="Senha">
+  <input type="password" class="form-input input-lg" placeholder="Senha" v-model="user.password">
 </div>
 <button class="btn btn-primary col-12" type="submit">Cadastrar</button>
 </form>
@@ -78,7 +78,7 @@ cadastro() {
     document.getElementById("cadastro").style.display = "block";
     document.getElementById("login").style.display = "none";
 },
-async logar(){
+logar(){
   user.logar(this.user).then((res)=>{
     if(res.status==200){
       localStorage.setItem('token', JSON.stringify(res.data));
@@ -89,9 +89,20 @@ async logar(){
   }).catch((e)=>{
     console.log(e)
     alert(e)
-  })
-  
-  
+  }) 
+},
+
+cadastra(){
+  user.cadastra(this.user).then((res)=>{
+    if(res.status==200){
+      return alert('verifique seu email e faça login depois')
+    }else{
+      return alert('usuario ja criado confirme seu endereço de email')
+    }
+  }).catch((e)=>{
+    console.log(e)
+    alert(e)
+  }) 
 }
 
 },
