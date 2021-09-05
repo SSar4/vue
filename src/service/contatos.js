@@ -13,8 +13,8 @@ export default {
       const x = JSON.parse(localStorage.getItem('token'))
 
       return http({
-        method:'get',
-        url:'listar/'+x.email,
+        method:'post',
+        url:'listar',
         params: {
           ID: 12345
         },
