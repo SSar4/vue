@@ -7,4 +7,4 @@ app.use(serverStatic(path.join(__dirname,'dist')))
 
 var port = 5000
 
-app.listen(port)
+app.listen(process.env.PORT || port)
